@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="https://uploads.onecompiler.io/4525e2h7x/459h3f28v/Logo%20UndanganDigital%20Elegan%20Resmi.png">
+<title>Undangan Pernikahan & Katalog Wedding Organizer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  colors: { ivory:'#FFFBF7', blush:'#F6E9E4', rose:'#B76E79', roseDk:'#8F4F5A', ink:'#3B2A30', sage:'#8A9A82', gold:'#C9A66B' },
+  fontFamily: { serif:['Cormorant Garamond','Georgia','serif'], sans:['Jost','system-ui','sans-serif'] }
+}}};
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', system-ui, sans-serif; background:#FFFBF7; color:#3B2A30; }
+  body.lock { overflow: hidden; }
+  #cover { transition: transform 1.1s cubic-bezier(.77,0,.18,1); }
+  #cover.open { transform: translateY(-100%); }
+  .arch { border-radius: 999px 999px 0 0; }
+  .inp { width:100%; border:1px solid #E7D3CC; background:#fff; border-radius:.75rem; padding:.65rem .9rem; outline:none; }
+  .inp:focus { border-color:#B76E79; box-shadow:0 0 0 3px rgba(183,110,121,.18); }
+  .btn { display:inline-flex; align-items:center; justify-content:center; gap:.4rem; padding:.7rem 1.4rem; border-radius:999px; background:#B76E79; color:#fff; font-weight:500; transition:background .2s, transform .1s; }
+  .btn:hover { background:#8F4F5A; } .btn:active { transform:scale(.97); }
+  .btn-o { background:transparent; color:#8F4F5A; border:1px solid #B76E79; } .btn-o:hover { background:#F6E9E4; }
+  .chip { padding:.35rem 1rem; border-radius:999px; border:1px solid #E7D3CC; font-size:.9rem; cursor:pointer; }
+  .chip.on { background:#3B2A30; color:#fff; border-color:#3B2A30; }
+  .tab.on { border-bottom:2px solid #B76E79; color:#8F4F5A; font-weight:500; }
+  #toast { transition: opacity .3s, transform .3s; }
+  :focus-visible { outline:2px solid #B76E79; outline-offset:2px; }
+  @media (max-width: 640px) {
+    #cover .arch { padding: 4rem 1.5rem 2.5rem; }
+    #cover h1 { font-size: clamp(2.25rem, 11vw, 3rem); overflow-wrap: anywhere; }
+    #top h2 { font-size: clamp(2.25rem, 10vw, 3.75rem); overflow-wrap: anywhere; line-height: 1.1; }
+    #gallery { gap: .5rem; }
+    #gallery figure { height: 11rem !important; }
+    #countdown { gap: .5rem; }
+    nav .max-w-5xl { gap: .5rem; }
+  }
+  @media (min-width: 641px) {
+    #cover .arch { width: min(84vw, 340px); padding: 4rem 3rem 2rem; }
+    #cover h1 { font-size: 3rem; margin-top: .75rem; }
+    #cover .arch [data-date] { margin-top: .75rem; }
+    #cover > p:first-of-type { margin-top: 1.25rem; }
+    #cover > #guestName { font-size: 1.25rem; }
+    #cover > #openBtn { margin-top: 1.25rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition:none !important; scroll-behavior:auto !important; } }
+</style>
+</head>
+<body class="lock">
+
+<!-- SAMPUL -->
+<section id="cover" class="fixed inset-0 z-50 bg-ink text-ivory flex flex-col items-center justify-center text-center px-6">
+  <div class="arch border border-gold/70 px-10 sm:px-16 pt-24 pb-12 w-[min(88vw,380px)]">
+    <p class="text-sm text-gold tracking-wide">Undangan Pernikahan</p>
+    <h1 class="font-serif text-5xl sm:text-6xl mt-4 leading-tight"><span data-s="groom"></span><span class="block italic text-gold text-4xl my-1">&amp;</span><span data-s="bride"></span></h1>
+    <p class="mt-5 text-sm text-ivory/70" data-date></p>
+  </div>
+  <p class="mt-8 text-sm text-ivory/70">Kepada Yth.</p>
+  <p id="guestName" class="font-serif text-2xl mt-1">Tamu Undangan</p>
+  <button id="openBtn" class="btn mt-7">Buka Undangan</button>
+</section>
+
+<!-- NAV -->
+<nav class="sticky top-0 z-40 bg-ivory/90 backdrop-blur border-b border-blush">
+  <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between text-sm">
+    <a href="#top" class="font-serif text-xl text-roseDk"><span data-s="groomShort"></span> &amp; <span data-s="brideShort"></span></a>
+    <div class="hidden sm:flex gap-5">
+      <a href="#cerita" class="hover:text-rose">Cerita</a><a href="#acara" class="hover:text-rose">Acara</a>
+      <a href="#amplop" class="hover:text-rose">Amplop</a><a href="#ucapan" class="hover:text-rose">Ucapan</a><a href="#vendor" class="hover:text-rose">Vendor</a>
+    </div>
+    <a href="#vendor" class="sm:hidden text-rose">Vendor WO</a>
+  </div>
+</nav>
+
+<main id="top">
+<!-- HERO -->
+<section class="bg-blush text-center px-4 sm:px-6 pt-12 sm:pt-16 pb-14 sm:pb-20">
+  <p class="text-sm text-roseDk">Kami mengundang Anda untuk hadir di hari bahagia kami</p>
+  <h2 class="font-serif text-4xl sm:text-8xl mt-4 leading-tight sm:leading-none break-words"><span data-s="groom"></span> <span class="italic text-gold">&amp;</span> <span data-s="bride"></span></h2>
+  <p class="mt-5 text-lg" data-date></p>
+  <p id="welcome" class="max-w-xl mx-auto mt-8 font-serif text-xl leading-relaxed text-ink/80"></p>
+  <div id="countdown" class="mt-10 grid grid-cols-4 gap-3 max-w-md mx-auto"></div>
+</section>
+
+<!-- CERITA & GALERI -->
+<section id="cerita" class="max-w-5xl mx-auto px-6 py-12 sm:py-20">
+  <h2 class="font-serif text-4xl text-center">Cerita Cinta Kami</h2>
+  <div class="mt-12 grid md:grid-cols-3 gap-10 text-center">
+    <div><p class="font-serif text-2xl text-rose">2019, Pertemuan</p><p class="mt-2 text-ink/75 leading-relaxed">Bertemu di sebuah acara kampus. Obrolan singkat tentang kopi berubah menjadi percakapan yang tak kunjung selesai.</p></div>
+    <div><p class="font-serif text-2xl text-rose">2022, Lamaran</p><p class="mt-2 text-ink/75 leading-relaxed">Setelah tiga tahun saling menguatkan, sebuah cincin dan kata “iya” menjadi awal rencana besar.</p></div>
+    <div><p class="font-serif text-2xl text-rose">2027, Pernikahan</p><p class="mt-2 text-ink/75 leading-relaxed">Dengan restu keluarga, kami melangkah ke babak baru dan ingin Anda ada di dalamnya.</p></div>
+  </div>
+  <div id="gallery" class="mt-16 grid grid-cols-2 md:grid-cols-3 gap-3"></div>
+  <p class="text-center text-xs text-ink/50 mt-3">Ganti tile galeri dengan foto Anda: ubah array GALLERY di bagian script (isi properti src).</p>
+</section>
+
+<!-- ACARA -->
+<section id="acara" class="bg-blush px-6 py-12 sm:py-20">
+  <h2 class="font-serif text-4xl text-center">Detail Acara</h2>
+  <div id="events" class="max-w-4xl mx-auto mt-12 grid md:grid-cols-2 gap-6"></div>
+</section>
+
+<!-- AMPLOP -->
+<section id="amplop" class="max-w-4xl mx-auto px-6 py-12 sm:py-20 text-center">
+  <h2 class="font-serif text-4xl">Amplop Digital</h2>
+  <p class="mt-3 text-ink/70 max-w-lg mx-auto">Kehadiran Anda adalah hadiah terbaik. Bila ingin berbagi kebahagiaan, Anda dapat mengirimkannya melalui rekening berikut.</p>
+  <div id="banks" class="mt-10 grid sm:grid-cols-2 gap-5 text-left"></div>
+  <div id="payExtra" class="mt-6"></div>
+</section>
+
+<!-- UCAPAN & RSVP -->
+<section id="ucapan" class="bg-blush px-6 py-12 sm:py-20">
+  <div class="max-w-4xl mx-auto">
+    <h2 class="font-serif text-4xl text-center">Ucapan &amp; Konfirmasi Kehadiran</h2>
+    <div class="mt-10 grid md:grid-cols-2 gap-8">
+      <form id="rsvpForm" class="bg-ivory rounded-2xl p-6 space-y-4 border border-[#E7D3CC]">
+        <div><label class="text-sm" for="rName">Nama</label><input id="rName" class="inp mt-1" required maxlength="60"></div>
+        <div><span class="text-sm">Kehadiran</span>
+          <div class="mt-1 grid grid-cols-2 gap-2">
+            <label class="chip text-center has-[:checked]:bg-ink has-[:checked]:text-white"><input type="radio" name="status" value="Hadir" class="sr-only" checked>Hadir</label>
+            <label class="chip text-center has-[:checked]:bg-ink has-[:checked]:text-white"><input type="radio" name="status" value="Berhalangan" class="sr-only">Berhalangan</label>
+          </div></div>
+        <div><label class="text-sm" for="rCount">Jumlah tamu</label>
+          <select id="rCount" class="inp mt-1"><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+        <div><label class="text-sm" for="rMsg">Ucapan &amp; doa</label><textarea id="rMsg" rows="3" class="inp mt-1" required maxlength="300"></textarea></div>
+        <button class="btn w-full" type="submit">Kirim ucapan</button>
+      </form>
+      <div>
+        <div id="rsvpStats" class="flex gap-4 text-sm mb-3"></div>
+        <div id="wishes" class="space-y-3 max-h-[28rem] overflow-y-auto pr-1"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VENDOR -->
+<section id="vendor" class="max-w-5xl mx-auto px-6 py-12 sm:py-20">
+  <h2 class="font-serif text-4xl text-center" id="woName"></h2>
+  <p class="text-center mt-3 text-ink/70">Wujudkan pernikahan impian bersama tim kami. Pilih paket, lalu konsultasikan lewat WhatsApp.</p>
+  <div id="chips" class="flex flex-wrap justify-center gap-2 mt-8"></div>
+  <div id="packages" class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+</section>
+</main>
+
+<footer class="bg-ink text-ivory/70 text-center py-10 text-sm px-6">
+  <p class="font-serif text-2xl text-ivory"><span data-s="groom"></span> &amp; <span data-s="bride"></span></p>
+  <p class="mt-2">Terima kasih atas doa dan kehadiran Anda.</p>
+  <button id="adminLink" class="mt-6 text-xs text-ivory/40 hover:text-ivory/80 underline">Mode pengelola</button>
+</footer>
+
+<div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-4 opacity-0 pointer-events-none z-[80] bg-ink text-white px-5 py-2.5 rounded-full text-sm shadow-lg"></div>
+
+<!-- ADMIN -->
+<div id="admin" class="hidden fixed inset-0 z-[70] bg-ivory overflow-y-auto">
+  <div class="max-w-4xl mx-auto px-5 py-8">
+    <div class="flex items-center justify-between">
+      <h2 class="font-serif text-3xl">Panel Pengelola</h2>
+      <button id="closeAdmin" class="btn btn-o">Tutup</button>
+    </div>
+    <div id="login" class="mt-10 max-w-sm">
+      <label class="text-sm" for="pin">PIN pengelola</label>
+      <input id="pin" type="password" class="inp mt-1" placeholder="PIN bawaan: 1234">
+      <button id="loginBtn" class="btn mt-3">Masuk</button>
+    </div>
+    <div id="panel" class="hidden mt-6">
+      <div class="flex gap-5 border-b border-blush overflow-x-auto">
+        <button class="tab on py-2 whitespace-nowrap" data-tab="t1">Ucapan &amp; RSVP</button>
+        <button class="tab py-2 whitespace-nowrap" data-tab="t2">Paket vendor</button>
+        <button class="tab py-2 whitespace-nowrap" data-tab="t3">Pengaturan</button>
+        <button class="tab py-2 whitespace-nowrap" data-tab="t4">Link tamu</button>
+      </div>
+      <div id="t1" class="pane pt-6"></div>
+      <div id="t2" class="pane hidden pt-6"></div>
+      <div id="t3" class="pane hidden pt-6"></div>
+      <div id="t4" class="pane hidden pt-6"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===== Util & penyimpanan ===== */
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const load = (k, d) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } };
+const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { toast('Gagal menyimpan: penyimpanan browser diblokir atau penuh'); return false; } };
+let tt; function toast(m) { const t = $('toast'); t.textContent = m; t.style.opacity = 1; t.style.transform = 'translate(-50%,0)'; clearTimeout(tt); tt = setTimeout(() => { t.style.opacity = 0; t.style.transform = 'translate(-50%,1rem)'; }, 2200); }
+const copyText = async txt => { try { await navigator.clipboard.writeText(txt); } catch (e) { const a = document.createElement('textarea'); a.value = txt; document.body.appendChild(a); a.select(); document.execCommand('copy'); a.remove(); } toast('Berhasil disalin'); };
+
+/* ===== Data bawaan ===== */
+const DEF = {
+  groom:'Raka Pratama', bride:'Almira Safitri', date:'2027-03-20T09:00',
+  welcome:'Dengan memohon rahmat dan ridho Tuhan Yang Maha Esa, kami bermaksud menyelenggarakan pernikahan putra-putri kami. Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.',
+  akadTime:'Sabtu, 20 Maret 2027, 09.00 WITA', akadPlace:'Masjid Raya, Jl. Penghibur No. 1, Makassar', akadMap:'https://maps.google.com/?q=Masjid+Raya+Makassar',
+  resTime:'Sabtu, 20 Maret 2027, 11.00 WITA', resPlace:'Ballroom Gedung Serbaguna, Jl. Sultan Hasanuddin, Makassar', resMap:'https://maps.google.com/?q=Makassar',
+  banks:[{bank:'BCA', no:'1234567890', name:'Raka Pratama'},{bank:'Mandiri', no:'9876543210', name:'Almira Safitri'}],
+  payLink:'', qris:'', woName:'Aurelia Wedding Organizer', wa:'6281234567890', pin:'1234'
+};
+const DEF_PKG = [
+  {id:'p1', cat:'Dekorasi', name:'Dekorasi Blossom', price:'Rp 12.000.000', desc:'Pelaminan bunga segar nuansa blush & gold.', items:['Pelaminan 6 m','Gerbang & photobooth','Dekorasi meja akad']},
+  {id:'p2', cat:'Catering', name:'Catering Prasmanan 300', price:'Rp 45.000.000', desc:'Menu nusantara dan western untuk 300 tamu.', items:['8 menu utama','3 stan dessert','Petugas & peralatan']},
+  {id:'p3', cat:'Dokumentasi', name:'Dokumentasi Signature', price:'Rp 9.500.000', desc:'Foto dan video sinematik sepanjang acara.', items:['2 fotografer','1 videografer','Album 20 halaman','Video highlight 3 menit']},
+  {id:'p4', cat:'MUA', name:'Rias Pengantin Lengkap', price:'Rp 6.000.000', desc:'Rias akad dan resepsi, termasuk keluarga inti.', items:['2 kali ganti busana','Rias 4 anggota keluarga','Hijab do & hairdo']}
+];
+const GALLERY = [
+  {c:'from-rose/60 to-gold/40', cap:'Busana pengantin adat Bugis', h:'h-64', src:'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80'},
+  {c:'from-sage/60 to-blush', cap:'Momen bahagia pasangan Bugis', h:'h-44', src:'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=80'},
+  {c:'from-gold/50 to-rose/40', cap:'Inspirasi lamaran adat Bugis', h:'h-52', src:'https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=900&q=80'},
+  {c:'from-blush to-rose/50', cap:'Potret pengantin dalam busana tradisional', h:'h-52', src:'https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=900&q=80'},
+  {c:'from-ink/40 to-rose/50', cap:'Dekorasi pernikahan bernuansa Bugis', h:'h-44', src:'https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?auto=format&fit=crop&w=900&q=80'},
+  {c:'from-sage/50 to-gold/40', cap:'Kebersamaan di hari pernikahan Bugis', h:'h-64', src:'https://images.unsplash.com/photo-1519225421980-888cb8cf9b2a?auto=format&fit=crop&w=900&q=80'}
+];
+function bugisFallback() {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600">
+    <defs><linearGradient id="bg" x2="0" y2="1"><stop stop-color="#f4ded0"/><stop offset="1" stop-color="#c99c73"/></linearGradient><linearGradient id="gold" x2="0" y2="1"><stop stop-color="#f5d889"/><stop offset="1" stop-color="#b67b32"/></linearGradient></defs>
+    <rect width="900" height="600" fill="url(#bg)"/><path d="M90 600V265a360 360 0 0 1 720 0v335" fill="#8d3d38" opacity=".88"/><path d="M145 600V270a305 305 0 0 1 610 0v330" fill="#f5e6c9"/><path d="M190 600V285a260 260 0 0 1 520 0v315" fill="#ead0a4"/>
+    <path d="M0 520h900v80H0" fill="#79513c"/><g fill="url(#gold)" stroke="#8d5d25" stroke-width="5"><path d="M270 196l22-54 22 39 27-77 25 76 26-38 18 54z"/><path d="M490 196l20-48 20 35 23-69 24 69 22-35 18 48z"/><circle cx="344" cy="194" r="10"/><circle cx="558" cy="194" r="10"/></g>
+    <g stroke="#6d392d" stroke-width="5"><circle cx="360" cy="238" r="48" fill="#9b6044"/><path d="M317 232q43-68 86 0v-28h-86z" fill="#251f1c"/><path d="M298 300q62-37 124 0l28 220H270z" fill="#a83f36"/><path d="M300 335l121 0M290 390h143M283 455h158" fill="none" stroke="#e5bb63" stroke-width="12"/><path d="M300 520h65v80h-80zM365 520h65v80h-65z" fill="#2b2522"/>
+    <circle cx="545" cy="238" r="48" fill="#a96f52"/><path d="M501 232q44-75 88 0v-28h-88z" fill="#7e302b"/><path d="M484 300q61-37 122 0l32 220H452z" fill="#d98d67"/><path d="M491 340h112M482 397h130M475 455h144" fill="none" stroke="#e4b94f" stroke-width="12"/><path d="M485 520h65v80h-80zM550 520h65v80h-65z" fill="#a83f36"/></g>
+    <g fill="#f6d77e"><circle cx="360" cy="282" r="7"/><circle cx="545" cy="282" r="7"/><path d="M337 305h46l-23 20zM522 305h46l-23 20z"/></g>
+  </svg>`;
+  return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+}
+let S = { ...DEF, ...load('wd_settings', {}) };
+let PKG = load('wd_packages', DEF_PKG);
+let RSVP = load('wd_rsvp', []);
+let cat = 'Semua';
+const wedding = () => new Date(S.date);
+const fmtDate = () => wedding().toLocaleDateString('id-ID', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+
+/* ===== Render halaman tamu ===== */
+function renderStatic() {
+  document.querySelectorAll('[data-s]').forEach(el => {
+    const k = el.dataset.s;
+    el.textContent = k === 'groomShort' ? S.groom.split(' ')[0] : k === 'brideShort' ? S.bride.split(' ')[0] : S[k];
+  });
+  document.querySelectorAll('[data-date]').forEach(el => el.textContent = fmtDate());
+  $('welcome').textContent = S.welcome;
+  $('woName').textContent = S.woName;
+  document.title = `Undangan ${S.groom} & ${S.bride}`;
+  $('gallery').innerHTML = GALLERY.map(g => `<figure class="${g.h} rounded-2xl overflow-hidden relative bg-gradient-to-br ${g.c} ${g.h === 'h-64' ? 'row-span-1' : ''}">
+    ${g.src ? `<img src="${esc(g.src)}" alt="${esc(g.cap)}" class="w-full h-full object-cover">` : ''}
+    <figcaption class="absolute bottom-0 inset-x-0 p-3 text-xs text-white bg-gradient-to-t from-ink/60 to-transparent">${esc(g.cap)}</figcaption></figure>`).join('');
+  $('gallery').querySelectorAll('img').forEach(img => {
+    img.onerror = () => { img.onerror = null; img.src = bugisFallback(); };
+  });
+  const ev = (t, time, place, map) => `<article class="bg-ivory rounded-2xl p-7 text-center border border-[#E7D3CC]">
+    <h3 class="font-serif text-3xl text-roseDk">${t}</h3><p class="mt-3 font-medium">${esc(time)}</p>
+    <p class="mt-1 text-ink/70">${esc(place)}</p>
+    <a class="btn btn-o mt-5" href="${esc(map)}" target="_blank" rel="noopener">Buka Google Maps</a></article>`;
+  $('events').innerHTML = ev('Akad Nikah', S.akadTime, S.akadPlace, S.akadMap) + ev('Resepsi', S.resTime, S.resPlace, S.resMap);
+  $('banks').innerHTML = S.banks.map(b => `<div class="rounded-2xl border border-gold/60 p-6 bg-white">
+    <p class="font-serif text-2xl text-roseDk">${esc(b.bank)}</p>
+    <p class="mt-2 text-xl tracking-wider">${esc(b.no)}</p><p class="text-sm text-ink/70">a.n. ${esc(b.name)}</p>
+    <button class="btn mt-4" data-copy="${esc(b.no)}">Salin nomor rekening</button></div>`).join('');
+  $('payExtra').innerHTML = (S.qris ? `<img src="${esc(S.qris)}" alt="QRIS" class="mx-auto w-48 rounded-xl border border-blush mb-4">` : '')
+    + (S.payLink ? `<a class="btn btn-o" href="${esc(S.payLink)}" target="_blank" rel="noopener">Buka tautan pembayaran</a>` : '');
+  renderWishes(); renderVendor();
+}
+function renderWishes() {
+  const hadir = RSVP.filter(r => r.status === 'Hadir').reduce((n, r) => n + (+r.count || 1), 0);
+  $('rsvpStats').innerHTML = `<span class="bg-ivory rounded-full px-4 py-1">${hadir} tamu hadir</span><span class="bg-ivory rounded-full px-4 py-1">${RSVP.length} ucapan</span>`;
+  $('wishes').innerHTML = RSVP.length ? RSVP.map(r => `<div class="bg-ivory rounded-xl p-4 border border-[#E7D3CC]">
+    <div class="flex justify-between gap-2"><strong>${esc(r.name)}</strong><span class="text-xs px-2 py-0.5 rounded-full ${r.status === 'Hadir' ? 'bg-sage/25 text-ink' : 'bg-rose/20 text-roseDk'}">${esc(r.status)}</span></div>
+    <p class="mt-1 text-ink/80">${esc(r.msg)}</p><p class="text-xs text-ink/40 mt-1">${new Date(r.time).toLocaleString('id-ID')}</p></div>`).join('')
+    : '<p class="text-ink/60">Belum ada ucapan. Jadilah yang pertama menuliskan doa.</p>';
+}
+function renderVendor() {
+  const cats = ['Semua', ...new Set(PKG.map(p => p.cat))];
+  $('chips').innerHTML = cats.map(c => `<button class="chip ${c === cat ? 'on' : ''}" data-cat="${esc(c)}">${esc(c)}</button>`).join('');
+  const list = PKG.filter(p => cat === 'Semua' || p.cat === cat);
+  $('packages').innerHTML = list.length ? list.map(p => `<article class="rounded-2xl border border-[#E7D3CC] bg-white p-6 flex flex-col">
+    <p class="text-sm text-sage">${esc(p.cat)}</p><h3 class="font-serif text-2xl mt-1">${esc(p.name)}</h3>
+    <p class="text-rose text-xl mt-1">${esc(p.price)}</p><p class="mt-3 text-ink/70 text-sm">${esc(p.desc)}</p>
+    <ul class="mt-3 text-sm space-y-1 flex-1">${p.items.map(i => `<li class="flex gap-2"><span class="text-gold">✓</span>${esc(i)}</li>`).join('')}</ul>
+    <button class="btn mt-5" data-book="${esc(p.id)}">Konsultasi / Booking via WhatsApp</button></article>`).join('')
+    : '<p class="col-span-full text-center text-ink/60">Belum ada paket di kategori ini.</p>';
+}
+function bookPackage(id) {
+  const p = PKG.find(x => x.id === id); if (!p) return;
+  const msg = `Halo ${S.woName}, saya tertarik dengan paket *${p.name}* (${p.cat}) seharga ${p.price}.\nRencana pernikahan: ${fmtDate()}.\nMohon info ketersediaan tanggal dan detail paketnya. Terima kasih.`;
+  window.open(`https://wa.me/${S.wa.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+}
+
+/* ===== Countdown ===== */
+function tick() {
+  let d = Math.max(0, wedding() - new Date()); const u = [['Hari', 864e5], ['Jam', 36e5], ['Menit', 6e4], ['Detik', 1e3]];
+  $('countdown').innerHTML = u.map(([l, ms]) => { const v = Math.floor(d / ms); d -= v * ms;
+    return `<div class="bg-ivory rounded-xl py-3 border border-[#E7D3CC]"><div class="font-serif text-3xl sm:text-4xl text-roseDk">${String(v).padStart(2, '0')}</div><div class="text-xs text-ink/60">${l}</div></div>`; }).join('');
+}
+
+/* ===== Tamu dari URL & sampul ===== */
+const guest = (new URLSearchParams(location.search).get('to') || '').trim().slice(0, 60);
+if (guest) { $('guestName').textContent = guest; $('rName').value = guest; }
+$('openBtn').onclick = () => {
+  $('cover').classList.add('open'); document.body.classList.remove('lock'); window.scrollTo(0, 0);
+  setTimeout(() => $('cover').style.display = 'none', 1200);
+};
+
+/* ===== Event global (delegasi) ===== */
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-copy],[data-cat],[data-book]'); if (!t) return;
+  if (t.dataset.copy) copyText(t.dataset.copy);
+  if (t.dataset.cat) { cat = t.dataset.cat; renderVendor(); }
+  if (t.dataset.book) bookPackage(t.dataset.book);
+});
+$('rsvpForm').onsubmit = e => {
+  e.preventDefault();
+  RSVP.unshift({ id: 'r' + Date.now(), name: $('rName').value.trim(), status: document.querySelector('[name=status]:checked').value,
+    count: $('rCount').value, msg: $('rMsg').value.trim(), time: Date.now() });
+  if (save('wd_rsvp', RSVP)) { $('rMsg').value = ''; renderWishes(); toast('Ucapan terkirim, terima kasih'); }
+};
+
+/* ===== Admin ===== */
+const authed = () => { try { return sessionStorage.getItem('wd_auth') === '1'; } catch (e) { return false; } };
+function openAdmin() { $('admin').classList.remove('hidden'); document.body.classList.add('lock'); showPanel(authed()); }
+function closeAdmin() { $('admin').classList.add('hidden'); if (!$('cover').style.display) {} if ($('cover').classList.contains('open')) document.body.classList.remove('lock'); if (location.hash === '#admin') history.replaceState(null, '', location.pathname + location.search); }
+function showPanel(ok) { $('login').classList.toggle('hidden', ok); $('panel').classList.toggle('hidden', !ok); if (ok) renderAdmin(); }
+$('adminLink').onclick = openAdmin; $('closeAdmin').onclick = closeAdmin;
+$('loginBtn').onclick = () => {
+  if ($('pin').value === S.pin) { try { sessionStorage.setItem('wd_auth', '1'); } catch (e) {} $('pin').value = ''; showPanel(true); }
+  else toast('PIN salah');
+};
+$('pin').addEventListener('keydown', e => { if (e.key === 'Enter') $('loginBtn').click(); });
+window.addEventListener('hashchange', () => { if (location.hash === '#admin') openAdmin(); });
+document.querySelectorAll('.tab').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x === b));
+  document.querySelectorAll('.pane').forEach(p => p.classList.toggle('hidden', p.id !== b.dataset.tab));
+});
+
+function renderAdmin() { adminRsvp(); adminPkg(); adminSettings(); adminLinks(); }
+
+function adminRsvp() {
+  const hadir = RSVP.filter(r => r.status === 'Hadir'), tdk = RSVP.length - hadir.length;
+  $('t1').innerHTML = `<div class="flex flex-wrap gap-3 text-sm mb-4">
+    <span class="bg-blush rounded-full px-4 py-1">Hadir: ${hadir.length} konfirmasi (${hadir.reduce((n, r) => n + (+r.count || 1), 0)} orang)</span>
+    <span class="bg-blush rounded-full px-4 py-1">Berhalangan: ${tdk}</span></div>
+    ${RSVP.length ? `<div class="space-y-2">${RSVP.map(r => `<div class="border border-blush rounded-xl p-3 flex justify-between gap-3">
+      <div><strong>${esc(r.name)}</strong> <span class="text-xs text-rose">${esc(r.status)} · ${esc(r.count)} orang</span><p class="text-sm text-ink/75">${esc(r.msg)}</p></div>
+      <button class="text-sm text-roseDk underline shrink-0" data-del-r="${r.id}">Hapus</button></div>`).join('')}</div>` : '<p class="text-ink/60">Belum ada ucapan masuk.</p>'}`;
+  $('t1').querySelectorAll('[data-del-r]').forEach(b => b.onclick = () => { RSVP = RSVP.filter(r => r.id !== b.dataset.delR); save('wd_rsvp', RSVP); adminRsvp(); renderWishes(); });
+}
+
+function adminPkg(edit) {
+  const p = edit || {id:'', cat:'Dekorasi', name:'', price:'', desc:'', items:[]};
+  $('t2').innerHTML = `<form id="pkgForm" class="grid gap-3 bg-blush/60 rounded-2xl p-5">
+    <h3 class="font-serif text-2xl">${edit ? 'Ubah paket' : 'Tambah paket'}</h3>
+    <input class="inp" id="pCat" list="cats" placeholder="Kategori (Dekorasi, Catering, ...)" value="${esc(p.cat)}" required>
+    <datalist id="cats"><option>Dekorasi</option><option>Catering</option><option>Dokumentasi</option><option>MUA</option></datalist>
+    <input class="inp" id="pName" placeholder="Nama paket" value="${esc(p.name)}" required>
+    <input class="inp" id="pPrice" placeholder="Harga, mis. Rp 10.000.000" value="${esc(p.price)}" required>
+    <input class="inp" id="pDesc" placeholder="Deskripsi singkat" value="${esc(p.desc)}">
+    <textarea class="inp" id="pItems" rows="4" placeholder="Isi paket, satu per baris">${esc(p.items.join('\n'))}</textarea>
+    <div class="flex gap-2"><button class="btn" type="submit">${edit ? 'Simpan perubahan' : 'Tambah paket'}</button>${edit ? '<button type="button" class="btn btn-o" id="pCancel">Batal</button>' : ''}</div></form>
+    <div class="mt-6 space-y-2">${PKG.map(x => `<div class="border border-blush rounded-xl p-3 flex justify-between items-center gap-3">
+      <div><strong>${esc(x.name)}</strong> <span class="text-xs text-sage">${esc(x.cat)}</span><div class="text-sm text-rose">${esc(x.price)}</div></div>
+      <div class="flex gap-3 text-sm shrink-0"><button class="underline" data-edit="${x.id}">Ubah</button><button class="underline text-roseDk" data-del="${x.id}">Hapus</button></div></div>`).join('')}</div>`;
+  $('pkgForm').onsubmit = e => {
+    e.preventDefault();
+    const np = { id: p.id || 'p' + Date.now(), cat: $('pCat').value.trim(), name: $('pName').value.trim(), price: $('pPrice').value.trim(), desc: $('pDesc').value.trim(), items: $('pItems').value.split('\n').map(s => s.trim()).filter(Boolean) };
+    PKG = edit ? PKG.map(x => x.id === p.id ? np : x) : [...PKG, np];
+    if (save('wd_packages', PKG)) { toast('Paket tersimpan'); renderVendor(); adminPkg(); }
+  };
+  if (edit) $('pCancel').onclick = () => adminPkg();
+  $('t2').querySelectorAll('[data-edit]').forEach(b => b.onclick = () => { adminPkg(PKG.find(x => x.id === b.dataset.edit)); window.scrollTo(0, 0); });
+  $('t2').querySelectorAll('[data-del]').forEach(b => b.onclick = () => { if (confirm('Hapus paket ini?')) { PKG = PKG.filter(x => x.id !== b.dataset.del); save('wd_packages', PKG); renderVendor(); adminPkg(); } });
+}
+
+function adminSettings() {
+  const F = [['groom','Nama mempelai pria'],['bride','Nama mempelai wanita'],['date','Tanggal & jam hari H','datetime-local'],['welcome','Teks sambutan','area'],
+    ['akadTime','Waktu akad'],['akadPlace','Tempat akad'],['akadMap','Link Google Maps akad'],['resTime','Waktu resepsi'],['resPlace','Tempat resepsi'],['resMap','Link Google Maps resepsi'],
+    ['payLink','Tautan pembayaran (opsional)'],['qris','URL gambar QRIS (opsional)'],['woName','Nama Wedding Organizer'],['wa','Nomor WhatsApp WO (format 628xxx)'],['pin','PIN pengelola']];
+  $('t3').innerHTML = `<form id="setForm" class="grid gap-3">${F.map(([k, l, t]) => `<label class="text-sm">${l}${t === 'area'
+    ? `<textarea class="inp mt-1" rows="4" id="s_${k}">${esc(S[k])}</textarea>`
+    : `<input class="inp mt-1" id="s_${k}" type="${t || 'text'}" value="${esc(S[k])}">`}</label>`).join('')}
+    <label class="text-sm">Rekening bank (satu per baris, format: Bank|Nomor|Atas nama)
+      <textarea class="inp mt-1" rows="4" id="s_banks">${esc(S.banks.map(b => [b.bank, b.no, b.name].join('|')).join('\n'))}</textarea></label>
+    <div class="flex gap-2"><button class="btn" type="submit">Simpan pengaturan</button><button type="button" id="resetAll" class="btn btn-o">Reset semua data</button></div></form>`;
+  $('setForm').onsubmit = e => {
+    e.preventDefault();
+    const n = { ...S }; F.forEach(([k]) => n[k] = $('s_' + k).value.trim());
+    n.banks = $('s_banks').value.split('\n').map(l => l.split('|').map(x => x.trim())).filter(a => a[1]).map(a => ({ bank: a[0], no: a[1], name: a[2] || '' }));
+    if (!n.date || isNaN(new Date(n.date))) return toast('Tanggal tidak valid');
+    S = n; if (save('wd_settings', S)) { renderStatic(); tick(); toast('Pengaturan tersimpan'); }
+  };
+  $('resetAll').onclick = () => { if (confirm('Hapus semua pengaturan, paket, dan ucapan?')) { ['wd_settings', 'wd_packages', 'wd_rsvp'].forEach(k => { try { localStorage.removeItem(k); } catch (e) {} }); location.reload(); } };
+}
+
+function adminLinks() {
+  const base = location.href.split(/[?#]/)[0];
+  $('t4').innerHTML = `<p class="text-sm text-ink/70">Buat tautan undangan personal. Nama tamu akan tampil di sampul depan.</p>
+    <div class="flex gap-2 mt-3"><input id="gName" class="inp" placeholder="Contoh: Bapak Budi & Keluarga"><button class="btn shrink-0" id="gMake">Buat</button></div>
+    <div id="gOut" class="mt-4 space-y-3"></div>`;
+  $('gMake').onclick = () => {
+    const n = $('gName').value.trim(); if (!n) return toast('Isi nama tamu dulu');
+    const url = `${base}?to=${encodeURIComponent(n).replace(/%20/g, '+')}`;
+    const wa = `https://wa.me/?text=${encodeURIComponent(`Kepada Yth. ${n},\n\nKami mengundang Anda ke pernikahan ${S.groom} & ${S.bride}.\nBuka undangan: ${url}`)}`;
+    $('gOut').innerHTML = `<input class="inp" readonly value="${esc(url)}"><div class="flex gap-2"><button class="btn" id="gCopy">Salin tautan</button><a class="btn btn-o" target="_blank" rel="noopener" href="${wa}">Kirim via WhatsApp</a></div>`;
+    $('gCopy').onclick = () => copyText(url);
+  };
+}
+
+/* ===== Mulai ===== */
+renderStatic(); tick(); setInterval(tick, 1000);
+if (location.hash === '#admin') openAdmin();
+</script>
+</body>
+</html>
